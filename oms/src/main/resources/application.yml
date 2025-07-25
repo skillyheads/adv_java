@@ -2,7 +2,7 @@ server:
   port: 0
 spring:
   application:
-    name: cim
+    name: oms
 eureka:
   client:
     service-url:
@@ -18,13 +18,10 @@ management:
     web:
       exposure:
         include: "*"
-  endpoint:
-    heapdump:
-      enabled: true
 info:
   app:
-    name: CIM Appliction
-    description: This is a cim application
+    name: OMS Appliction
+    description: This is a order management application
     version: 1.0.0
     encoding: UTF-8
     java:
