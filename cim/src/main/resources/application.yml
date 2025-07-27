@@ -1,8 +1,13 @@
 server:
   port: 0
+
 spring:
   application:
     name: cim
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: false
 eureka:
   client:
     service-url:
@@ -10,6 +15,19 @@ eureka:
   instance:
     instance-id: ${spring.application.name}:${INSTANCE_ID:${random.value}}
     prefer-ip-address: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      oms:
+        failure-rate-threshold: 50
+        minimum-number-of-calls: 4
+        sliding-window-size: 10
+        wait-duration-in-open-state: 15s
+        automatic-transition-from-open-to-half-open-enabled: true
+        register-health-indicator: true
+        permitted-number-of-calls-in-half-open-state: 1
+        minimum-number-of-calls-in-half-open-state: 1
 management:
   info:
     env:
@@ -21,11 +39,12 @@ management:
   endpoint:
     heapdump:
       enabled: true
-info:
-  app:
-    name: CIM Appliction
-    description: This is a cim application
-    version: 1.0.0
-    encoding: UTF-8
-    java:
-      version: 17
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+logging:
+  level:
+    org.springframework.cloud.openfeign: DEBUG
+    io.github.resilience4j: DEBUG

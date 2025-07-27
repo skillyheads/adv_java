@@ -18,6 +18,10 @@ management:
     web:
       exposure:
         include: "*"
+  health:
+    circuitbreakers:
+      enabled: true
+
 info:
   app:
     name: OMS Appliction
